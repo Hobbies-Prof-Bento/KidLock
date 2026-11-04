@@ -1,0 +1,50 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{098F8FF0-4323-4B7D-A5C0-733BBCC4F6EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KidLock.Core", "src\KidLock.Core\KidLock.Core.csproj", "{2483EC37-390E-4E46-82AD-C0D4328464AA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KidLock.App", "src\KidLock.App\KidLock.App.csproj", "{D13F7676-3A5F-4BC3-A27D-7FE8A8FE12E0}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{7AF37863-932E-438C-9699-4CF531CBCB7C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KidLock.Core.Tests", "tests\KidLock.Core.Tests\KidLock.Core.Tests.csproj", "{8B0F992E-240C-4B96-865B-9DDC3CD8C22C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KidLock.App.Tests", "tests\KidLock.App.Tests\KidLock.App.Tests.csproj", "{36E8DEF9-2E61-4DC2-AFD5-490949E92C76}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{2483EC37-390E-4E46-82AD-C0D4328464AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2483EC37-390E-4E46-82AD-C0D4328464AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2483EC37-390E-4E46-82AD-C0D4328464AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2483EC37-390E-4E46-82AD-C0D4328464AA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D13F7676-3A5F-4BC3-A27D-7FE8A8FE12E0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D13F7676-3A5F-4BC3-A27D-7FE8A8FE12E0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D13F7676-3A5F-4BC3-A27D-7FE8A8FE12E0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D13F7676-3A5F-4BC3-A27D-7FE8A8FE12E0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B0F992E-240C-4B96-865B-9DDC3CD8C22C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B0F992E-240C-4B96-865B-9DDC3CD8C22C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B0F992E-240C-4B96-865B-9DDC3CD8C22C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B0F992E-240C-4B96-865B-9DDC3CD8C22C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36E8DEF9-2E61-4DC2-AFD5-490949E92C76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36E8DEF9-2E61-4DC2-AFD5-490949E92C76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36E8DEF9-2E61-4DC2-AFD5-490949E92C76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36E8DEF9-2E61-4DC2-AFD5-490949E92C76}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{2483EC37-390E-4E46-82AD-C0D4328464AA} = {098F8FF0-4323-4B7D-A5C0-733BBCC4F6EF}
+		{D13F7676-3A5F-4BC3-A27D-7FE8A8FE12E0} = {098F8FF0-4323-4B7D-A5C0-733BBCC4F6EF}
+		{8B0F992E-240C-4B96-865B-9DDC3CD8C22C} = {7AF37863-932E-438C-9699-4CF531CBCB7C}
+		{36E8DEF9-2E61-4DC2-AFD5-490949E92C76} = {7AF37863-932E-438C-9699-4CF531CBCB7C}
+	EndGlobalSection
+EndGlobal

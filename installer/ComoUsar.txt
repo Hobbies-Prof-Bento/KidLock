@@ -1,0 +1,32 @@
+﻿COMO USAR O KIDLOCK
+
+ONDE ELE FICA
+  Um cadeado perto do relógio, na barra de tarefas.
+    Cadeado VERDE    = teclado e touchpad livres
+    Cadeado VERMELHO = bloqueados
+  Não está vendo? Clique na setinha ^ ao lado do relógio. Para deixá-lo sempre
+  visível, arraste o cadeado para a barra de tarefas.
+
+BLOQUEAR E DESBLOQUEAR
+  Aperte juntas as teclas:   Ctrl + Alt + Shift + L
+  O mesmo atalho bloqueia e desbloqueia o teclado e o touchpad.
+  Apertar várias teclas ao mesmo tempo NÃO desbloqueia, então a criança pode
+  mexer à vontade.
+
+VER OU TROCAR O ATALHO
+  Dê dois cliques no cadeado: abre a janela "Atalhos de teclado", que mostra as
+  teclas de bloquear e desbloquear. Para trocar, clique em "Alterar...", aperte
+  a nova combinação e clique em "Salvar".
+  Passar o mouse sobre o cadeado também mostra o atalho.
+
+ESQUECEU O ATALHO? (EMERGÊNCIA)
+  Aperte Ctrl + Alt + Del, escolha "Bloquear" e entre de novo com a sua senha.
+  O KidLock libera o teclado e o touchpad automaticamente.
+
+MAIS OPÇÕES (botão direito no cadeado)
+  - Bloquear agora
+  - Bloquear só o teclado ou só o touchpad
+  - Ligar ou desligar "Iniciar com o Windows"
+
+DESINSTALAR
+  Configurações do Windows > Aplicativos > Aplicativos instalados > KidLock > Desinstalar
