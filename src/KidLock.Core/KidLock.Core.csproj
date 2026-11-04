@@ -1,0 +1,13 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Núcleo sem dependência de Win32: toda a lógica de decisão é testável em qualquer SO. -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <RootNamespace>KidLock.Core</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="KidLock.Core.Tests" />
+  </ItemGroup>
+
+</Project>

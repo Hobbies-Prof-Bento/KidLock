@@ -1,0 +1,169 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+    tags: ['v*']
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      integration:
+        description: Rodar também os testes de integração (ganchos reais do Windows)
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  DOTNET_NOLOGO: true
+  DOTNET_CLI_TELEMETRY_OPTOUT: true
+
+jobs:
+  version:
+    name: Versão
+    runs-on: ubuntu-latest
+    outputs:
+      value: ${{ steps.version.outputs.value }}
+    steps:
+      - id: version
+        shell: bash
+        run: |
+          if [[ "$GITHUB_REF" == refs/tags/v* ]]; then
+            echo "value=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=1.0.0-ci.$GITHUB_RUN_NUMBER" >> "$GITHUB_OUTPUT"
+          fi
+
+  build-test:
+    name: Build e testes
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Restore
+        run: dotnet restore KidLock.sln
+
+      - name: Build
+        run: dotnet build KidLock.sln -c Release --no-restore
+
+      - name: Testes unitários
+        run: >
+          dotnet test KidLock.sln -c Release --no-build
+          --filter "Category!=Integration"
+          --logger "trx;LogFilePrefix=unit"
+          --results-directory TestResults
+          --collect "XPlat Code Coverage"
+
+      # Ganchos globais exigem um desktop interativo; os runners hospedados nem sempre oferecem.
+      - name: Testes de integração
+        if: ${{ inputs.integration }}
+        run: >
+          dotnet test KidLock.sln -c Release --no-build
+          --filter "Category=Integration"
+          --logger "trx;LogFilePrefix=integration"
+          --results-directory TestResults
+
+      - name: Publicar resultados
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: TestResults
+
+  installer:
+    name: Instalador
+    needs: [version, build-test]
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Inno Setup
+        shell: pwsh
+        run: |
+          if (-not (Test-Path "${env:ProgramFiles(x86)}\Inno Setup 6\ISCC.exe")) {
+            choco install innosetup -y --no-progress
+          }
+
+      - name: Gerar instalador
+        shell: pwsh
+        run: >
+          .\build.ps1 -Target Installer
+          -Version ${{ needs.version.outputs.value }}
+          -RepoUrl "${{ github.server_url }}/${{ github.repository }}"
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KidLock-Setup
+          path: artifacts/installer/KidLock-Setup-*.exe
+
+  portable:
+    name: Portátil ${{ matrix.profile }}
+    needs: [version, build-test]
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        # Nomes dos perfis em src/KidLock.App/Properties/PublishProfiles
+        profile: [win-x64, win-arm64]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          global-json-file: global.json
+
+      - name: Publish
+        shell: pwsh
+        run: .\build.ps1 -Target Publish -PublishProfile ${{ matrix.profile }} -Version ${{ needs.version.outputs.value }}
+
+      - name: Empacotar
+        shell: pwsh
+        run: |
+          Copy-Item README.md, LICENSE artifacts/publish/${{ matrix.profile }}/
+          Compress-Archive -Path artifacts/publish/${{ matrix.profile }}/* `
+            -DestinationPath KidLock-${{ needs.version.outputs.value }}-portatil-${{ matrix.profile }}.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: KidLock-portatil-${{ matrix.profile }}
+          path: KidLock-*.zip
+
+  release:
+    name: Release
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: [version, installer, portable]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: KidLock-*
+          merge-multiple: true
+
+      - uses: softprops/action-gh-release@v2
+        with:
+          files: |
+            KidLock-Setup-*.exe
+            KidLock-*.zip
+          generate_release_notes: true
+          body: |
+            ## Como instalar
+            Baixe **KidLock-Setup-${{ needs.version.outputs.value }}.exe** abaixo e dê dois cliques. Não precisa instalar mais nada.
+            Funciona em qualquer Windows 10 ou 11. Se o Windows mostrar "O Windows protegeu o computador",
+            clique em **Mais informações → Executar assim mesmo**.
+
+            Depois de instalado: **Ctrl + Alt + Shift + L** bloqueia e desbloqueia teclado e touchpad.
+            Guia completo no [README](${{ github.server_url }}/${{ github.repository }}#para-quem-vai-usar).

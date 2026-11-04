@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
+    <ApplicationVisualStyles>true</ApplicationVisualStyles>
+    <ApplicationUseCompatibleTextRendering>false</ApplicationUseCompatibleTextRendering>
+    <AssemblyName>KidLock</AssemblyName>
+    <RootNamespace>KidLock.App</RootNamespace>
+    <ApplicationIcon>Assets\kidlock.ico</ApplicationIcon>
+    <!-- A interface é só em português: não embarca traduções do .NET para outros idiomas. -->
+    <SatelliteResourceLanguages>pt-BR</SatelliteResourceLanguages>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\KidLock.Core\KidLock.Core.csproj" />
+    <InternalsVisibleTo Include="KidLock.App.Tests" />
+  </ItemGroup>
+
+</Project>
