@@ -74,7 +74,7 @@ jobs:
 
       - name: Publicar resultados
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-results
           path: TestResults
@@ -104,7 +104,7 @@ jobs:
           -Version ${{ needs.version.outputs.value }}
           -RepoUrl "${{ github.server_url }}/${{ github.repository }}"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: KidLock-Setup
           path: artifacts/installer/KidLock-Setup-*.exe
@@ -135,7 +135,7 @@ jobs:
           Compress-Archive -Path artifacts/publish/${{ matrix.profile }}/* `
             -DestinationPath KidLock-${{ needs.version.outputs.value }}-portatil-${{ matrix.profile }}.zip
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: KidLock-portatil-${{ matrix.profile }}
           path: KidLock-*.zip
