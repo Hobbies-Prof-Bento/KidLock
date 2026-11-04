@@ -43,9 +43,9 @@ jobs:
     name: Build e testes
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
 
@@ -74,7 +74,7 @@ jobs:
 
       - name: Publicar resultados
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: test-results
           path: TestResults
@@ -84,9 +84,9 @@ jobs:
     needs: [version, build-test]
     runs-on: windows-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
 
@@ -104,7 +104,7 @@ jobs:
           -Version ${{ needs.version.outputs.value }}
           -RepoUrl "${{ github.server_url }}/${{ github.repository }}"
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: KidLock-Setup
           path: artifacts/installer/KidLock-Setup-*.exe
@@ -118,9 +118,9 @@ jobs:
         # Nomes dos perfis em src/KidLock.App/Properties/PublishProfiles
         profile: [win-x64, win-arm64]
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
 
-      - uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v5
         with:
           global-json-file: global.json
 
@@ -135,7 +135,7 @@ jobs:
           Compress-Archive -Path artifacts/publish/${{ matrix.profile }}/* `
             -DestinationPath KidLock-${{ needs.version.outputs.value }}-portatil-${{ matrix.profile }}.zip
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: KidLock-portatil-${{ matrix.profile }}
           path: KidLock-*.zip
@@ -148,12 +148,12 @@ jobs:
     permissions:
       contents: write
     steps:
-      - uses: actions/download-artifact@v4
+      - uses: actions/download-artifact@v8
         with:
           pattern: KidLock-*
           merge-multiple: true
 
-      - uses: softprops/action-gh-release@v2
+      - uses: softprops/action-gh-release@v3
         with:
           files: |
             KidLock-Setup-*.exe
